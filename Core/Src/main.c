@@ -132,7 +132,7 @@ int main(void)
 					{
 						StateNow = State_2;
 					}
-
+					else {StateNow = State_WrongNum;}
 				}
 				break;
 			case State_2:
@@ -142,7 +142,7 @@ int main(void)
 					{
 						StateNow = State_3;
 					}
-
+					else {StateNow = State_WrongNum;}
 				}
 				break;
 			case State_3:
@@ -152,6 +152,7 @@ int main(void)
 					{
 						StateNow = State_4;
 					}
+					else {StateNow = State_WrongNum;}
 
 				}
 				break;
@@ -162,6 +163,7 @@ int main(void)
 					{
 						StateNow = State_5;
 					}
+					else {StateNow = State_WrongNum;}
 
 				}
 				break;
@@ -172,6 +174,7 @@ int main(void)
 					{
 						StateNow = State_6;
 					}
+					else {StateNow = State_WrongNum;}
 
 				}
 				break;
@@ -182,6 +185,7 @@ int main(void)
 					{
 						StateNow = State_7;
 					}
+					else {StateNow = State_WrongNum;}
 
 				}
 				break;
@@ -192,6 +196,7 @@ int main(void)
 					{
 						StateNow = State_8;
 					}
+					else {StateNow = State_WrongNum;}
 
 				}
 				break;
@@ -202,6 +207,7 @@ int main(void)
 					{
 						StateNow = State_9;
 					}
+					else {StateNow = State_WrongNum;}
 
 				}
 				break;
@@ -212,7 +218,7 @@ int main(void)
 					{
 						StateNow = State_10;
 					}
-
+					else {StateNow = State_WrongNum;}
 				}
 				break;
 			case State_10:
@@ -222,6 +228,7 @@ int main(void)
 					{
 						StateNow = State_11;
 					}
+					else {StateNow = State_WrongNum;}
 
 				}
 				break;
@@ -232,6 +239,7 @@ int main(void)
 					{
 						StateNow = State_12;
 					}
+					else {StateNow = State_WrongNum;}
 
 				}
 				break;
@@ -242,16 +250,30 @@ int main(void)
 					{
 						HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 					}
+					else {StateNow = State_WrongNum;}
 
 
 				}
 				break;
 			case State_WrongNum:
-
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+				if(ButtonMatrixPushed[0] != 0 && ButtonMatrixPushed[1] == 0)
+				{
+					if(ButtonMatrix == 0b1000) // CLear
+					{
+						HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+						StateNow = State_1;
+					}
+				}
 				break;
 			default:
 				break;
 		}
+		  if(ButtonMatrix == 0b1000) // CLear
+		  {
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+		  	StateNow = State_1;
+		  }
 		  ButtonMatrixPushed[1] = ButtonMatrixPushed[0];
 
 	  }
